@@ -13,7 +13,7 @@
 | Nombre completo | Código | Correo institucional |
 |-----------------|--------|----------------------|
 | Juan Sebastian Navarrete Rada | 202459562 | juan.sebastian.navarrete@correounivalle.edu.co |
-| [Estudiante 2]  |        |                      |
+| María Fernanda González Ramírez  | 202477325 | maria.gonzalez.r@correounivalle.edu.co |
 | [Estudiante 3]  |        |                      |
 
 **Obligatorio:** editar esta tabla con los datos reales de todos los integrantes.
