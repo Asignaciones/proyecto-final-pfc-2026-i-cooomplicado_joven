@@ -12,7 +12,7 @@
 
 | Nombre completo | Código | Correo institucional |
 |-----------------|--------|----------------------|
-| [Estudiante 1]  |        |                      |
+| Juan Sebastian Navarrete Rada | 202459562 | juan.sebastian.navarrete@correounivalle.edu.co |
 | [Estudiante 2]  |        |                      |
 | [Estudiante 3]  |        |                      |
 
