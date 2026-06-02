@@ -63,7 +63,8 @@ object AsignacionAulas {
   // ---------------------------------------------------------------------------
 
   /** Devuelve true sii los intervalos [ini1, fin1) y [ini2, fin2) se traslapan. */
-  def solapan(c1: Curso, c2: Curso): Boolean = ???
+  def solapan(c1: Curso, c2: Curso): Boolean =
+    iniCurso(c1) < finCurso(c2) && iniCurso(c2) < finCurso(c1)
 
   /**
    * Número de pares (i, j) con i < j tales que a(i) == a(j) >= 0
@@ -72,13 +73,21 @@ object AsignacionAulas {
   def choques(cursos: Cursos, a: Asignacion): Int = ???
 
   /** Cantidad de cursos cuya aula asignada tiene capacidad menor al número de estudiantes. */
-  def capacidadFallida(cursos: Cursos, aulas: Aulas, a: Asignacion): Int = ???
+  def capacidadFallida(cursos: Cursos, aulas: Aulas, a: Asignacion): Int =
+    cursos.indices.count { i =>
+      a(i) >= 0 && capAula(aulas(a(i))) < estCurso(cursos(i))
+    }
 
   /**
    * Suma de (cap(aula_i) - est(curso_i)) para los cursos asignados
    * con capacidad suficiente.
    */
-  def desperdicio(cursos: Cursos, aulas: Aulas, a: Asignacion): Int = ???
+  def desperdicio(cursos: Cursos, aulas: Aulas, a: Asignacion): Int =
+    cursos.indices.foldLeft(0) { (acc, i) =>
+      if (a(i) >= 0 && capAula(aulas(a(i))) >= estCurso(cursos(i)))
+        acc + (capAula(aulas(a(i))) - estCurso(cursos(i)))
+      else acc
+    }
 
   /**
    * Ordena los cursos asignados por hora de inicio y suma las distancias
