@@ -70,7 +70,12 @@ object AsignacionAulas {
    * Número de pares (i, j) con i < j tales que a(i) == a(j) >= 0
    * y los cursos i y j se solapan.
    */
-  def choques(cursos: Cursos, a: Asignacion): Int = ???
+  def choques(cursos: Cursos, a: Asignacion): Int =
+    cursos.indices.flatMap { i =>
+      (i + 1 until cursos.length).map { j => (i, j) }
+    }.count { case (i, j) =>
+      a(i) >= 0 && a(i) == a(j) && solapan(cursos(i), cursos(j))
+    }
 
   /** Cantidad de cursos cuya aula asignada tiene capacidad menor al número de estudiantes. */
   def capacidadFallida(cursos: Cursos, aulas: Aulas, a: Asignacion): Int =
@@ -98,7 +103,11 @@ object AsignacionAulas {
 
   /** Costo total: w_CH * CH + w_CF * CF + w_DE * DE + w_MV * MV. */
   def costoAsignacion(cursos: Cursos, aulas: Aulas, d: Distancias,
-                      a: Asignacion, w: Pesos): Int = ???
+                      a: Asignacion, w: Pesos): Int =
+    w._1 * choques(cursos, a) +
+      w._2 * capacidadFallida(cursos, aulas, a) +
+      w._3 * desperdicio(cursos, aulas, a) +
+      w._4 * movilidad(cursos, aulas, d, a)
 
   /**
    * Genera todas las asignaciones completas posibles: vectores en {0,..,m-1}^n.
