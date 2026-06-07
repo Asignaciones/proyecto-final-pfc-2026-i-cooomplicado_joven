@@ -84,8 +84,17 @@ object AsignacionAulas {
    * Ordena los cursos asignados por hora de inicio y suma las distancias
    * entre aulas de cursos consecutivos.
    */
-  def movilidad(cursos: Cursos, aulas: Aulas, d: Distancias,
-                a: Asignacion): Int = ???
+  def movilidad(cursos: Cursos, aulas: Aulas, d: Distancias, a: Asignacion): Int = {
+    val ordenCursos =
+      (0 until cursos.length).filter(i => a(i) >= 0).sortBy(i => iniCurso(cursos(i))).toVector
+    def auxiliar(indices: Vector[Int]): Int =
+      indices match {
+        case i1 +: i2 +: resto =>
+          d(a(i1))(a(i2)) + auxiliar((i2 +: resto))
+        case _ => 0
+      }
+    auxiliar(ordenCursos)
+  }
 
   /** Costo total: w_CH * CH + w_CF * CF + w_DE * DE + w_MV * MV. */
   def costoAsignacion(cursos: Cursos, aulas: Aulas, d: Distancias,
@@ -95,12 +104,33 @@ object AsignacionAulas {
    * Genera todas las asignaciones completas posibles: vectores en {0,..,m-1}^n.
    * El tamaño del resultado es m^n.
    */
-  def generarAsignaciones(n: Int, m: Int): Vector[Asignacion] = ???
+  def generarAsignaciones(n: Int, m: Int): Vector[Asignacion] = {
+    if (n == 0)
+      Vector(Vector()) // Viene siendo caso base.
+    else {
+      val parcialM =
+        generarAsignaciones(n - 1, m) // Aquí tenemos una recursión de varios llamados.
+      (0 until m).toVector.flatMap { aula =>
+        parcialM.map(asig => aula +: asig) // Se combinan los resultados que va arrojando la recursión
+        // Hasta llegar a caso base.
+      }
+    }
+  }
 
   /**
    * Devuelve la asignación de mínimo costo y su costo.
    * Usa generarAsignaciones para explorar el espacio.
    */
-  def asignacionOptima(cursos: Cursos, aulas: Aulas, d: Distancias,
-                       w: Pesos): (Asignacion, Int) = ???
+  def asignacionOptima(cursos: Cursos, aulas: Aulas, d: Distancias, w: Pesos): (Asignacion, Int) = {
+    val asignacionesPosibles = generarAsignaciones(cursos.length, aulas.length)
+    asignacionesPosibles.foldLeft((Vector[Int](), Int.MaxValue))
+    { (mejor, actual) =>
+      val costoW =
+        costoAsignacion(cursos, aulas, d, actual, w)
+      if (costoW < mejor._2)
+        (actual, costoW)
+      else
+        mejor
+    }
+  }
 }
