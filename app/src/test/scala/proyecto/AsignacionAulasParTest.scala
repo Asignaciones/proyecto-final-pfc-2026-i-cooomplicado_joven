@@ -38,4 +38,30 @@ class AsignacionAulasParTest extends AnyFunSuite {
     val (_, costo) = asignacionOptimaPar(c1, a1, d1, w)
     assert(costo <= 37)
   }
+
+  // Tests para movilidadPar
+  test("movilidadPar caso 000") {
+    val m = Vector(0,0,0)
+    assert(movilidadPar(c1,a1,d1,m) == movilidad(c1,a1,d1,m))
+  }
+
+  test("movilidadPar caso 001") {
+    val a = Vector(0,0,1)
+    assert(movilidadPar(c1,a1,d1,a) == movilidad(c1,a1,d1,a))
+  }
+
+  test("movilidadPar caso 010") {
+    val f = Vector(0,1,0)
+    assert(movilidadPar(c1,a1,d1,f) == movilidad(c1,a1,d1,f))
+  }
+
+  test("movilidadPar caso 101") {
+    val e = Vector(1,0,1)
+    assert(movilidadPar(c1,a1,d1,e) == movilidad(c1,a1,d1,e))
+  }
+
+  test("movilidadPar caso 111") {
+    val r = Vector(1,1,1)
+    assert(movilidadPar(c1,a1,d1,r) == movilidad(c1,a1,d1,r))
+  }
 }
