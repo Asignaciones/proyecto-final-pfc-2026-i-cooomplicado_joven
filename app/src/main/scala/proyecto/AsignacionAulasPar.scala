@@ -12,8 +12,30 @@ object AsignacionAulasPar {
   def desperdicioPar(cursos: Cursos, aulas: Aulas, a: Asignacion): Int = ???
 
   /** Versión paralela de movilidad: divide el vector de cursos en dos mitades. */
-  def movilidadPar(cursos: Cursos, aulas: Aulas, d: Distancias,
-                   a: Asignacion): Int = ???
+  def movilidadPar(cursos: Cursos, aulas: Aulas, d: Distancias, a: Asignacion): Int = {
+
+    val cursosOrdenados =
+      (0 until cursos.length)
+        .filter(i => a(i) >= 0).sortBy(i => iniCurso(cursos(i))).toVector
+    def auxiliar(inicio: Int, fin: Int): Int = {
+      if (fin - inicio <= 1)
+        0
+      else if (fin - inicio == 2)
+        d(a(cursosOrdenados(inicio)))(a(cursosOrdenados(inicio + 1)))
+      else {
+        val mitad = inicio + (fin - inicio) / 2
+        val (izq, der) =
+          parallel(
+            auxiliar(inicio, mitad),
+            auxiliar(mitad, fin)
+          )
+        val frontera =
+          d(a(cursosOrdenados(mitad - 1)))(a(cursosOrdenados(mitad)))
+        izq + der + frontera
+      }
+    }
+    auxiliar(0, cursosOrdenados.length)
+  }
 
   /**
    * Versión paralela de generarAsignaciones:
