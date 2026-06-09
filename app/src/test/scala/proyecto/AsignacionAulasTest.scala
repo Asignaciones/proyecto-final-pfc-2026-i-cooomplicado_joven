@@ -14,6 +14,12 @@ class AsignacionAulasTest extends AnyFunSuite {
   val d1: Distancias = Vector(Vector(0, 3), Vector(3, 0))
   val w: Pesos = (1000, 100, 1, 2)
 
+  // Datos de prueba — Ejemplo 2 del enunciado
+  // Cursos sin solape entre sí (consecutivos), F03 no cabe en ninguna aula
+  val c2: Cursos     = Vector(("F01", 0, 4, 40), ("F02", 4, 8, 25), ("F03", 8, 12, 50), ("F04", 12, 16, 15))
+  val a2: Aulas      = Vector(("S201", 45), ("S202", 30))
+  val d2: Distancias = Vector(Vector(0, 5), Vector(5, 0))
+
   // solapan
   test("solapan: M01[4,8) y M02[6,10) se solapan") {
     assert(solapan(("M01", 4, 8, 25), ("M02", 6, 10, 30)))
