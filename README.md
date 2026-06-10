@@ -14,7 +14,7 @@
 |-----------------|--------|----------------------|
 | Juan Sebastian Navarrete Rada | 202459562 | juan.sebastian.navarrete@correounivalle.edu.co |
 | María Fernanda González Ramírez  | 202477325 | maria.gonzalez.r@correounivalle.edu.co |
-| [Estudiante 3]  |        |                      |
+| Samuel Garcia Parra  | 202459476 | samuel.parra@correounivalle.edu.co |
 
 **Obligatorio:** editar esta tabla con los datos reales de todos los integrantes.
 Si un integrante no aparece aquí, su nota individual será 0.0.
